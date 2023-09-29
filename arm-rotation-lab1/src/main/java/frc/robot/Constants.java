@@ -13,7 +13,37 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static int joyStick1 = 0;
+  public static int joyStick2 = 1;
+  public static int joyStick3 = 2;
+  public static int joystick4 = 3;
+
   public static class OperatorConstants {
+
     public static final int kDriverControllerPort = 0;
+
+    public static final int LeftDriveTalonPort = 2;
+    public static final int RightDriveTalonPort = 3;
+
+  }
+
+  public static class PIDConstants {
+    public static final double armPID_P = 0.1;
+    public static final double armPID_I = 0.001;
+    public static final double armPID_D = 0.0;
+    public static final double armPID_K = 2.0; // Used to calculate kP, from the difference in angle
+    public static final double extPID_P = 0.05; 
+    public static final double armHoldingVoltage = 1.1; // Used to calculate Feedforward
+    public static final double armManualHoldingVoltage = 1.9; // Manual holding voltage
+
+  }
+
+  public static class Measurements {
+    public static final double threadLength = 0.375; // Inches per rotation of leadscrew
+    public static final double gearRatio = 1.0/1.0; // 1 rotation of screw = 1 rotation of leadscrew motor
+    
+    public static final double baseExtendPower = 1; //Percent of full power/100
+
   }
 }
