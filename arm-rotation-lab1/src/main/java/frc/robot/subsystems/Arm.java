@@ -172,8 +172,8 @@ public class Arm extends SubsystemBase {
   Returns the position of the Leadscrew (inches)
   */
   public double getLeadScrewPos() {
-    //double result = ((extendingTalon.getSelectedSensorPosition(0)/4096.0)*Constants.Measurements.threadLength)/Constants.Measurements.gearRatio;
-    //return result;
+    double result = ((extendingTalon.getSelectedSensorPosition(0)/4096.0)*Constants.Measurements.threadLength)/Constants.Measurements.gearRatio;
+    return result;
   }
 
   /**
@@ -217,9 +217,10 @@ public class Arm extends SubsystemBase {
     else if(RobotContainer.getJoy1().getPOV() == 180){
       extendingTalon.set(ControlMode.PercentOutput, extendPID.calculate(getLeadScrewVelocity()) - Constants.Measurements.baseExtendPower);
     }
-    */
+    
     
   }
+  */
 
   public boolean fullyExtended(){
     return extendingTalon.isFwdLimitSwitchClosed() == 0.0;
@@ -327,11 +328,13 @@ public class Arm extends SubsystemBase {
     }
     */
 
+    /*
     if (RobotContainer.getJoy1().getRawButton(Constants.ButtonMap.extLimitReset)) {
       configSoftLimits(false);
     }else{
       configSoftLimits(true);
     }
+    */
 
     if (RobotContainer.getJoy1().getRawButton(8)) {
       configHardLimits(false);
@@ -389,6 +392,7 @@ public class Arm extends SubsystemBase {
 
     // Enable/Disable Soft limits when the leadscrew extends a certain amount
     // This is so that it can stow safely, yet extend beyond the frame to pick up field elements
+    /*
     if (getLeadScrewPos() >= Constants.Measurements.fullyExtendedLeadScrewThreshold && RobotContainer.getJoy1().getRawButton(Constants.ButtonMap.extLimitReset) == false) {
       rotTalon.configReverseSoftLimitThreshold(Constants.Measurements.bumperAngleBound*Constants.Measurements.degreesToTicks);
       rotTalon.configReverseSoftLimitEnable(true);
@@ -396,6 +400,7 @@ public class Arm extends SubsystemBase {
       rotTalon.configReverseSoftLimitThreshold(Constants.Measurements.lowerAngleBound*Constants.Measurements.degreesToTicks);
       rotTalon.configReverseSoftLimitEnable(true);
     }
+    */
 
     if (rotTalon.isRevLimitSwitchClosed() == 0.0) {
       rotTalon.setSelectedSensorPosition(0);
