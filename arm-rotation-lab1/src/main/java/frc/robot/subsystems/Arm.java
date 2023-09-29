@@ -75,14 +75,14 @@ public class Arm extends SubsystemBase {
     // Reset encoders to either 0 or otherwise an arbitrary offset
     // resetEncoders();
     rotTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-    extendingTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    // extendingTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
     // Sets max current limit for amperage
     rotTalon.configPeakCurrentLimit(15);
 
     // Important for future use on final mechanism - configures limit switches for extension
-    extendingTalon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
-    extendingTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+    //extendingTalon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+    //extendingTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
     rotTalon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
     rotTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
 
@@ -97,22 +97,22 @@ public class Arm extends SubsystemBase {
     // Sets limits for how far the talon can extend forwards and backwards
     rotTalon.configForwardSoftLimitThreshold(Constants.Measurements.upperAngleBound*Constants.Measurements.degreesToTicks);
     rotTalon.configReverseSoftLimitThreshold(Constants.Measurements.lowerAngleBound*Constants.Measurements.degreesToTicks);
-    extendingTalon.configForwardSoftLimitThreshold(((Constants.Measurements.upperScrewBound*Constants.Measurements.gearRatio)/Constants.Measurements.threadLength)*4096.0);
-    extendingTalon.configReverseSoftLimitThreshold(((Constants.Measurements.lowerScrewBound*Constants.Measurements.gearRatio)/Constants.Measurements.threadLength)*4096.0);
+    //extendingTalon.configForwardSoftLimitThreshold(((Constants.Measurements.upperScrewBound*Constants.Measurements.gearRatio)/Constants.Measurements.threadLength)*4096.0);
+    //extendingTalon.configReverseSoftLimitThreshold(((Constants.Measurements.lowerScrewBound*Constants.Measurements.gearRatio)/Constants.Measurements.threadLength)*4096.0);
 
     // NOTICE: These lines of code are needed to enable the limits!
     rotTalon.configForwardSoftLimitEnable(true);
     rotTalon.configReverseSoftLimitEnable(true);
-    extendingTalon.configForwardSoftLimitEnable(true);
-    extendingTalon.configReverseSoftLimitEnable(true);
+    //extendingTalon.configForwardSoftLimitEnable(true);
+    //extendingTalon.configReverseSoftLimitEnable(true);
 
     
 
     // Reset Extending Talon
-    extendingTalon.setSelectedSensorPosition(0);
+    //extendingTalon.setSelectedSensorPosition(0);
 
     // Set tolerance of PID
-    extendPID.setTolerance(0.2);
+    //extendPID.setTolerance(0.2);
 
     // Tolerance from reaching the setpoint
     armPID.setTolerance(Constants.Measurements.armPIDTolerance);
@@ -147,7 +147,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void extendArm(double power) {
-    extendingTalon.set(ControlMode.PercentOutput, power);
+    //extendingTalon.set(ControlMode.PercentOutput, power);
     //((extendingTalon.getSelectedSensorPosition(0)/4096.0)*Constants.Measurements.threadLength)/Constants.Measurements.gearRatio
   }
 
@@ -172,8 +172,8 @@ public class Arm extends SubsystemBase {
   Returns the position of the Leadscrew (inches)
   */
   public double getLeadScrewPos() {
-    double result = ((extendingTalon.getSelectedSensorPosition(0)/4096.0)*Constants.Measurements.threadLength)/Constants.Measurements.gearRatio;
-    return result;
+    //double result = ((extendingTalon.getSelectedSensorPosition(0)/4096.0)*Constants.Measurements.threadLength)/Constants.Measurements.gearRatio;
+    //return result;
   }
 
   /**
@@ -189,7 +189,7 @@ public class Arm extends SubsystemBase {
    * Sets the setpoint of the PID controller
    */
   public void setExtendPIDSetpoint(double setpoint) {
-    extendPID.setSetpoint(setpoint);
+    //extendPID.setSetpoint(setpoint);
   }
 
   /**
@@ -202,6 +202,7 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("PID: ", armPID.calculate(getAngle())+(Math.sin(getAngle())*(Constants.PIDConstants.armHoldingVoltage/12.0)));
   }
 
+  /*
   public void updateExtendPID() {
     if(RobotContainer.getJoy1().getPOV() == 0 && getLeadScrewPos() > Constants.Measurements.maxExtension - 1){
       extendingTalon.set(ControlMode.PercentOutput, Constants.Measurements.extLimitPower);
@@ -216,6 +217,7 @@ public class Arm extends SubsystemBase {
     else if(RobotContainer.getJoy1().getPOV() == 180){
       extendingTalon.set(ControlMode.PercentOutput, extendPID.calculate(getLeadScrewVelocity()) - Constants.Measurements.baseExtendPower);
     }
+    */
     
   }
 
@@ -304,8 +306,11 @@ public class Arm extends SubsystemBase {
     // power is a function of distance with max power at half extension
     //double power =  (Constants.Measurements.maxExtendPower * (1 - Math.pow(extendingTalon.getSelectedSensorPosition()*Constants.Measurements.ticksToInches - Constants.Measurements.maxExtension/2, 8)));
     //if(power < Constants.Measurements.minExtendPower) power = Constants.Measurements.minExtendPower;
-    updateExtendPID();
+
+    //updateExtendPID();
+
     // SmartDashboard.putNumber("Extension Power", power);
+    /*
     if (RobotContainer.getJoy1().getPOV() == 0) {
       //Max extension 16.67 inches
       // Move extension forward at POV pos of 0
@@ -320,6 +325,7 @@ public class Arm extends SubsystemBase {
     else {
       extendArm(0);
     }
+    */
 
     if (RobotContainer.getJoy1().getRawButton(Constants.ButtonMap.extLimitReset)) {
       configSoftLimits(false);
@@ -395,12 +401,14 @@ public class Arm extends SubsystemBase {
       rotTalon.setSelectedSensorPosition(0);
     }
 
+    /*
     if (fullyRetracted()) {
       extendingTalon.setSelectedSensorPosition(0);
     }
     if(fullyExtended()) {
       extendingTalon.setSelectedSensorPosition(Constants.Measurements.maxExtension/Constants.Measurements.ticksToInches);
     }
+    */
 
     // Prints status of certain things to the DriverStation
     SmartDashboard.putNumber("kP: ", 0.7/differenceInAngle);

@@ -11,7 +11,11 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.Rotate;
+import frc.robot.subsystems.Arm;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,11 +25,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private static final SendableChooser<Command> chooser = new SendableChooser<Command>();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public static final Joystick joystick0 = new Joystick(0);
+  public static final Joystick joystick1 = new Joystick(1);
+  public static final Joystick joystick2 = new Joystick(2);
+
+  public final Arm arm = new Arm();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -44,12 +50,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+
+        JoystickButton pivot90 = new JoystickButton(joystick0, 6);
+        pivot90.onTrue(new Rotate(arm, 85));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
@@ -58,7 +64,21 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    // We have to return the name of the object, which is lock for LockOnTarget in this case or the code will not work
+    // We have to specify which command to run as autonomous command 
+    return chooser.getSelected();
   }
+
+  public static Joystick getJoy1() {
+    return joystick0;
+  }
+
+  public static Joystick getJoy2() {
+    return joystick1;
+}
+
+public static Joystick getJoy3() {
+  return joystick2;
+}
+
 }
