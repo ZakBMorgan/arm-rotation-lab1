@@ -44,6 +44,32 @@ public final class Constants {
     public static final double gearRatio = 1.0/1.0; // 1 rotation of screw = 1 rotation of leadscrew motor
     
     public static final double baseExtendPower = 1; //Percent of full power/100
+    public static final double extLimitPower = 0.4; //Percent of full power/100. Power when extention is close to to limit switch
+
+    public static final double armPIDTolerance = 2;
 
   }
+
+  public static class ButtonMap {
+
+    // Trigger button is used for incrementing and decrementing angle of arm
+
+    // Manual override button
+    public static final int manualOverride = 1;
+
+    // Buttons for Arm rotation
+    public static final int stowPosition = 3;
+    public static final int middlePosition = 4;
+    public static final int topPosition = 6;
+    public static final int groundPosition = 5;
+
+  }
+
+  /*
+  public static final int leftPort = 1;
+  public static final int rightPort = 2;
+
+  public static int joy1;
+  public static int joy2;
+  */
 }
