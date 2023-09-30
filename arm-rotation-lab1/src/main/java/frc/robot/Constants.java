@@ -26,6 +26,10 @@ public final class Constants {
     public static final int LeftDriveTalonPort = 2;
     public static final int RightDriveTalonPort = 3;
 
+    public static final int armPort = 10; // ID 2 for testing
+    public static final boolean armInvert = true;
+    public static final int extPort = 11;
+
   }
 
   public static class PIDConstants {
@@ -42,11 +46,18 @@ public final class Constants {
   public static class Measurements {
     public static final double threadLength = 0.375; // Inches per rotation of leadscrew
     public static final double gearRatio = 1.0/1.0; // 1 rotation of screw = 1 rotation of leadscrew motor
+    public static final double lowerAngleBound = 5; // Position of Arm when down
     
     public static final double baseExtendPower = 1; //Percent of full power/100
     public static final double extLimitPower = 0.4; //Percent of full power/100. Power when extention is close to to limit switch
 
     public static final double armPIDTolerance = 2;
+
+    public static final double upperAngleBound = 105; // Maximum pos of Arm in degrees, when stowed
+    public static final double lowerScrewBound = 1.0; // Lower bound for motion of screw (inches)
+    public static final double upperScrewBound = 18.5; // Upper bound for motion of screw (inches)
+    public static final double fullyExtendedLeadScrewThreshold = 5.0;
+    public static final double degreesToTicks = 4096.0/360.0;
 
   }
 
@@ -62,6 +73,8 @@ public final class Constants {
     public static final int middlePosition = 4;
     public static final int topPosition = 6;
     public static final int groundPosition = 5;
+
+    public static final int logButton = 12;
 
   }
 
